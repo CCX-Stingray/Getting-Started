@@ -1,5 +1,5 @@
 ### Introduction
-It is possible to install a stock CentOS Linux distribution on the SmartNIC as described here. Once that is done, a common use-case would be to run an OVS-DPDK or  Linux bridge and use VF-pairs to connect VMs to the bridge. This would offload the bridging function from the host to the SmartNIC. 
+It is possible to install a stock CentOS Linux distribution on the SmartNIC. Once that is done, a common use-case would be to run an OVS-DPDK or  Linux bridge and use VF-pairs to connect VMs to the bridge. This would offload the bridging function from the host to the SmartNIC. 
 
 This document describes the software and scripts to do this in an easy and repeatable manner.
 
@@ -18,9 +18,11 @@ The Stingray device can be configured in different combinations of ARM-side and 
 
 This configuration allows 8 VMs on the host to use 8 VFs which are connected to the bridge running on the SmartNIC. From a functionality perspective, this is no different than if the bridge was running on the host instead of being offloaded to the SmartNIC.
 
+Note that in this configuration, the Host sees 4 PFs and they are numbered from 8 to 11. The ARM sees 8 PFs and they are numbered from 0 to 7.
+
 ### Prerequisites
 #### SmartNIC
-1. The SmartNIC should be running CentOS 7. Instructions on installing CentOS can be found in the Stingray PS225 Quickstart Guide, section 5.2. 
+1. The SmartNIC should be running CentOS 7. Instructions on installing CentOS can be found in the [Stingray PS225 Quickstart Guide](https://github.com/CCX-Stingray/Documentation/blob/master/5880X-PS225-UG1xx.pdf), section 5.2. 
 2. The Nitro configuration on the card should support SR-IOV and VF pairs e.g. `bcm958802a8028_2x25g_8+4_pf.cfg`
 #### Config Controller
 1. Install [Ansible](https://www.ansible.com/) if the system does not have it. You can find installation instructions [here.](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW)
