@@ -1,0 +1,19 @@
+---
+
+- name: Install bnxt-ctl
+  block:
+    - name: Copy RPM for bnxt-ctl
+      copy:
+        src: bnxt-ctl-1.0.0-1.aarch64.rpm
+        dest: /root/rpms
+
+    - name: Install bnxt-ctl RPM
+      yum:
+        name: /root/rpms/bnxt-ctl-1.0.0-1.aarch64.rpm
+        state: present
+
+    - name: Record bnxt-ctl installed
+      set_fact:
+        bnxt_ctl_installed: true
+        cacheable: yes
+  when: bnxt_ctl_installed is undefined or not bnxt_ctl_installed

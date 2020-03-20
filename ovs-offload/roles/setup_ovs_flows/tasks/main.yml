@@ -1,0 +1,5 @@
+---
+
+- name: Setup OVS flows
+  script:
+    cmd: setup_ovs_flows.sh

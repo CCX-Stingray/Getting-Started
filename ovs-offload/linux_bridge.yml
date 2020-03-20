@@ -1,0 +1,9 @@
+---
+
+- hosts: smartnic
+  remote_user: root
+  roles:
+    - teardown_ovs_bridge
+    - stop_ovs
+    - setup_pairs
+    - setup_linux_bridge

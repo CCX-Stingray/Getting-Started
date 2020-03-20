@@ -1,0 +1,9 @@
+---
+
+- hosts: smartnic
+  remote_user: root
+  tasks:
+    - name: Set linux bridge as not active
+      set_fact:
+        linux_bridge_active: false
+        cacheable: yes

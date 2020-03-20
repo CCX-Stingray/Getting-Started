@@ -1,0 +1,13 @@
+---
+
+- name: Teardown Linux bridge
+  block:
+    - name: Teardown bridge
+      script:
+        cmd: teardown_linux_bridge.sh {{num_vfs}}
+
+    - name: Record Linux bridge torn down
+      set_fact:
+        linux_bridge_active: false
+        cacheable: yes
+  when: linux_bridge_active is defined and linux_bridge_active

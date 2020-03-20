@@ -1,0 +1,10 @@
+---
+
+- hosts: smartnic
+  remote_user: root
+  tasks:
+    - name: Set ovs as not started
+      set_fact:
+        ovs_started: false
+        cacheable: yes
+

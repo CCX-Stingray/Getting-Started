@@ -1,0 +1,13 @@
+---
+
+- name: Config VF connections
+  block:
+    - name: Setup VF pairs
+      script:
+        cmd: setup_vf_pairs.sh {{host_pf}} {{num_vfs}}
+
+    - name: Record vf pairs
+      set_fact:
+        vf_pairs_established: true
+        cacheable: yes
+  when: vf_pairs_established is undefined or not vf_pairs_established

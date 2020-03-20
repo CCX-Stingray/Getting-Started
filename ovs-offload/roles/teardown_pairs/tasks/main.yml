@@ -1,0 +1,13 @@
+---
+
+- name: Unconfig VF connections
+  block:
+    - name: Teardown VF pairs
+      script:
+        cmd: teardown_vf_pairs.sh {{num_vfs}}
+
+    - name: Record vf pairs torn down
+      set_fact:
+        vf_pairs_established: false
+        cacheable: yes
+  when: vf_pairs_established is defined and vf_pairs_established

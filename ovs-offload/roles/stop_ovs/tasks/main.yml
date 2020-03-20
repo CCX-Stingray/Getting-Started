@@ -1,0 +1,13 @@
+---
+
+- name: Stop OVS and update facts
+  block:
+    - name: Stop OVS
+      script:
+        cmd: stop_ovs.sh {{num_vfs}}
+
+    - name: Record OVS stopped
+      set_fact:
+        ovs_started: false
+        cacheable: yes
+  when: ovs_started is defined and ovs_started

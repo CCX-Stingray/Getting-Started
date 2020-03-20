@@ -1,0 +1,10 @@
+---
+
+- hosts: smartnic
+  remote_user: root
+  tasks:
+    - name: Set ovs bridge as not active
+      set_fact:
+        ovs_bridge_active: false
+        cacheable: yes
+

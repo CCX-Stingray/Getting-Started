@@ -1,0 +1,13 @@
+---
+
+- name: Setup Linux bridge
+  block:
+    - name: Bring up bridge
+      script:
+        cmd: setup_linux_bridge.sh {{num_vfs}} {{bridge_ip}} {{gateway_ip}}
+
+    - name: Record Linux bridge active
+      set_fact:
+        linux_bridge_active: true
+        cacheable: yes
+  when: linux_bridge_active is undefined or not linux_bridge_active

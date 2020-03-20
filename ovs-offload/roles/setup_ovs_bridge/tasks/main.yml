@@ -1,0 +1,31 @@
+---
+
+- name: Setup OVS bridge
+  block:
+    - name: Create bridge with DPDK datapath
+      openvswitch_bridge:
+        bridge: ovs-br0
+        state: present
+        set: bridge ovs-br0 datapath_type=netdev
+
+    - name: Assign IP to bridge
+      command:
+        cmd: ip addr add {{bridge_ip}}/24 dev ovs-br0
+
+    - name: Bring up bridge
+      command:
+        cmd: ip link set dev ovs-br0 up
+
+    - name: add VF pairs with PCI address of VF
+      openvswitch_port:
+        bridge: ovs-br0
+        port: pf4-vf{{ item }}
+        state: present
+        set: Interface pf4-vf{{ item }} type=dpdk options:dpdk-devargs=0008:01:05.{{ item }} ofport_request={{ item|int + 1 }} options:n_rxq=1
+      with_sequence: start=0 end={{ num_vfs - 1 }} stride=1
+
+    - name: Record OVS bridge active
+      set_fact:
+        ovs_bridge_active: true
+        cacheable: yes
+  when: ovs_bridge_active is undefined or not ovs_bridge_active
