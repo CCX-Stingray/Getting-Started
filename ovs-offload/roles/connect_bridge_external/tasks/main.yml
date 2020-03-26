@@ -1,0 +1,13 @@
+---
+
+- name: Connect bridge to the external network via phy0
+  block:
+    - name: Connect bridge to the external network
+      script:
+        cmd: connect_bridge_external.sh
+
+    - name: Record bridge connected to the external network
+      set_fact:
+        bridge_connected_external: true
+        cacheable: yes
+  when: bridge_connected_external is undefined or not bridge_connected_external

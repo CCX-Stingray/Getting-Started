@@ -7,10 +7,6 @@
         bridge: ovs-br0
         state: absent
 
-    # - name: Unbind physical interface to uio
-    #   script:
-    #     cmd: phy_uio_unbind.sh
-
     - name: Record OVS bridge torn down
       set_fact:
         ovs_bridge_active: false

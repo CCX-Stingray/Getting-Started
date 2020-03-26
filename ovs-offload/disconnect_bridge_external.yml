@@ -4,7 +4,3 @@
   remote_user: root
   roles:
     - disconnect_bridge_external
-    - teardown_ovs_bridge
-    - stop_ovs
-    - setup_pairs
-    - setup_linux_bridge

@@ -1,0 +1,6 @@
+---
+
+- hosts: smartnic
+  remote_user: root
+  roles:
+    - connect_bridge_external

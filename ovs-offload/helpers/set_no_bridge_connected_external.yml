@@ -1,0 +1,9 @@
+---
+
+- hosts: smartnic
+  remote_user: root
+  tasks:
+    - name: Set bridge_connected_external as not established
+      set_fact:
+        bridge_connected_external: false
+        cacheable: yes

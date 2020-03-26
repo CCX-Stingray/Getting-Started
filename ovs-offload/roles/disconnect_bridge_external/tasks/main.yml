@@ -1,0 +1,13 @@
+---
+
+- name: Disconnect bridge from the external network via phy0
+  block:
+    - name: Disconnect bridge to the external network
+      script:
+        cmd: disconnect_bridge_external.sh
+
+    - name: Record bridge disconnected from the external network
+      set_fact:
+        bridge_connected_external: false
+        cacheable: yes
+  when: bridge_connected_external is defined and bridge_connected_external

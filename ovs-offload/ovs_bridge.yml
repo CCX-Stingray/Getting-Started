@@ -3,6 +3,7 @@
 - hosts: smartnic
   remote_user: root
   roles:
+    - disconnect_bridge_external
     - teardown_linux_bridge
     - setup_pairs
     - start_ovs
