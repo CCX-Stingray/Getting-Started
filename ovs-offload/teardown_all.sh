@@ -1,3 +1,3 @@
 #! /bin/sh
 
-ansible-playbook -i inventory teardown_all.yml
+ansible-playbook -i inventory playbooks/teardown_all.yml

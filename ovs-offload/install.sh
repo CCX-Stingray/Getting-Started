@@ -1,3 +1,3 @@
 #! /bin/sh
 
-ansible-playbook -i inventory install.yml
+ansible-playbook -i inventory playbooks/install.yml

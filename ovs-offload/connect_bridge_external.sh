@@ -1,3 +1,3 @@
 #! /bin/sh
 
-ansible-playbook -i inventory connect_bridge_external.yml
+ansible-playbook -i inventory playbooks/connect_bridge_external.yml

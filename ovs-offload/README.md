@@ -53,8 +53,9 @@ For example:
 `smartnic ansible_host=10.0.0.12 host_pf=8 num_vfs=8 bridge_ip=10.0.0.10 gateway_ip=10.0.0.1`  
 Note: The variable ansible_host refers to the SmartNIC itself, not the Host machine in which it is installed (labeled as Host in the diagram).
 6. To configure multiple hosts, additional lines can be added to the `inventory` file, one per host.  
-7. To undo all the configuration and remove the bridge (Linux or OVS), run `teardown_all.sh`
-8. The scripts keep track of what is configured and started. This allows you to run the scripts multiple times without error; they simply skip what has already been configured. Running the `teardown_all.sh` script updates the history. However, if you have a bridge running and reboot the SmartNIC without executing the `teardown_all.sh` script, the actual state of the card will no longer be in sync with the history maintained by the scripts. In that case, run the `flush_history.sh` script to flush the history.
+7. By default, the bridge is not connected to the external network. To connect it, run `connect_bridge_external.sh` and to disconnect run `disconnect_bridge_external.sh`.
+8. To undo all the configuration and remove the bridge (Linux or OVS), run `teardown_all.sh`
+9. The scripts keep track of what is configured and started. This allows you to run the scripts multiple times without error; they simply skip what has already been configured. Running the `teardown_all.sh` script updates the history. However, if you have a bridge running and reboot the SmartNIC without executing the `teardown_all.sh` script, the actual state of the card will no longer be in sync with the history maintained by the scripts. In that case, run the `flush_history.sh` script to flush the history.
 ### Performance
 `iperf` can be used to test the throughput across the bridge - between two VFs and from a VF to the external network. On our test setup, this is what we measured.
 #### VF to VF

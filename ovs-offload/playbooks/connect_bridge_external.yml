@@ -3,4 +3,4 @@
 - hosts: smartnic
   remote_user: root
   roles:
-    - disconnect_bridge_external
+    - ../roles/connect_bridge_external

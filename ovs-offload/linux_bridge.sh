@@ -1,3 +1,3 @@
 #! /bin/sh
 
-ansible-playbook -i inventory linux_bridge.yml
+ansible-playbook -i inventory playbooks/linux_bridge.yml
