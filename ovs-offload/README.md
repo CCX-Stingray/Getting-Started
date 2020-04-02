@@ -28,34 +28,29 @@ The IP addresses shown here are just examples. The only requirement is that the 
 2. The configuration on the card should support SR-IOV and VF pairs e.g. `bcm958802a8028_2x25g_8+4_pf.cfg`
 #### Config Controller
 1. Install [Ansible](https://www.ansible.com/) if the system does not have it. You can find installation instructions [here.](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html?extIdCarryOver=true&sc_cid=701f2000001OH7YAAW)
-2. Add the following to your Ansible configuration  
+2. Ensure [ssh access](https://docs.ansible.com/ansible/latest/user_guide/connection_details.html#ssh-key-setup) to the SmartNIC. The public key of the Config Controller should be registered as an authorized key on the SmartNIC.
+### Installation and Usage
+1. Clone this repository to the Config Controller; then `cd Getting-Started/ovs-offload`
+2. Edit the `ansible.cfg` file and replace the placeholder with a fully qualified path to the current directory
 ```INI
 [defaults]
-gathering = smart
-fact_caching = jsonfile
-fact_caching_connection = <fully qualified path to a local directory>
-fact_caching_timeout = 86400
+...
+fact_caching_connection = path-to-this-directory
+...
 ```
-
-- The Ansible configuration file can be stored in several places as described [here](https://docs.ansible.com/ansible/latest/reference_appendices/config.html). The simplest option is to create a local `ansible.cfg` file in the `ovs-offload` directory.  
-- The path to the cache directory must be a *"a local filesystem path to a writeable directory (Ansible will attempt to create the directory if one does not exist)"* as explained [here](https://docs.ansible.com/ansible/2.5/user_guide/playbooks_variables.html#fact-caching) 
-3. Ensure [ssh access](https://docs.ansible.com/ansible/latest/user_guide/connection_details.html#ssh-key-setup) to the SmartNIC. The public key of the Config Controller should be registered as an authorized key on the SmartNIC.
-### Installation and Usage
-1. Clone this repository; then `cd ovs-offload`
-2. To install all the necessary software on the SmartNIC, run
-	`install.sh`
-3. To configure a Linux bridge and connect the VF pairs as shown in the diagram, run `linux_bridge.sh`
-4. To configure an OVS bridge and connect the VF pairs as shown in the diagram,
-  - Edit the file `roles/setup_ovs_flows/files/setup_ovs_flows.sh` to configure OpenFlow rules that match the MAC addresses of the VFs on your Host. If these rules will be configured elsewhere (say by an OpenFlow controller), comment out all the lines in this file.
-  - Run `ovs_bridge.sh`
-5. The IP address of the SmartNIC, the Host PF and other parameters can be configured in the `inventory` file.  
+3. The IP address of the SmartNIC, the Host PF and other parameters can be configured in the `inventory` file.  
 For example:  
 `smartnic ansible_host=10.0.0.12 host_pf=8 num_vfs=8 bridge_ip=10.0.0.10 gateway_ip=10.0.0.1`  
-Note: The variable ansible_host refers to the SmartNIC itself, not the Host machine in which it is installed (labeled as Host in the diagram).
-6. To configure multiple hosts, additional lines can be added to the `inventory` file, one per host.  
+Note: The variable `ansible_host` refers to the SmartNIC itself, not the Host machine in which it is installed.  
+To configure multiple hosts, additional lines can be added to the `inventory` file, one per host.  
+4. To install all the necessary software on the SmartNIC, run `install.sh`
+5. To configure a Linux bridge and connect the VF pairs as shown in the diagram, run `linux_bridge.sh`
+6. To configure an OVS bridge and connect the VF pairs as shown in the diagram,
+  - Edit the file `roles/setup_ovs_flows/files/setup_ovs_flows.sh` to configure OpenFlow rules that match the MAC addresses of the VFs on your Host. If these rules will be configured elsewhere (say by an OpenFlow controller), comment out all the lines in this file.
+  - Run `ovs_bridge.sh`
 7. By default, the bridge is not connected to the external network. To connect it, run `connect_bridge_external.sh` and to disconnect run `disconnect_bridge_external.sh`.
 8. To undo all the configuration and remove the bridge (Linux or OVS), run `teardown_all.sh`
-9. The scripts keep track of what is configured and started. This allows you to run the scripts multiple times without error; they simply skip what has already been configured. Running the `teardown_all.sh` script updates the history. However, if you have a bridge running and reboot the SmartNIC without executing the `teardown_all.sh` script, the actual state of the card will no longer be in sync with the history maintained by the scripts. In that case, run the `flush_history.sh` script to flush the history.
+9. The scripts keep track of what is configured and started. This allows you to run the scripts multiple times without error; they simply skip what has already been configured. However, if you have a bridge running and reboot the SmartNIC without executing the `teardown_all.sh` script, the actual state of the card will no longer be in sync with the history maintained by the scripts. In that case, run the `flush_history.sh` script to flush the history.
 ### Performance
 `iperf` can be used to test the throughput across the bridge - between two VFs and from a VF to the external network. On our test setup, this is what we measured.
 #### VF to VF
