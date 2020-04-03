@@ -1,0 +1,13 @@
+---
+
+- name: Start OVS and update facts
+  block:
+    - name: Start OVS
+      script:
+        cmd: start_ovs.sh
+
+    - name: Record OVS started
+      set_fact:
+        ovs_started: true
+        cacheable: yes
+  when: ovs_started is undefined or not ovs_started

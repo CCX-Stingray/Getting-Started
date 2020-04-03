@@ -1,0 +1,13 @@
+---
+
+- name: Config PF connections
+  block:
+    - name: Setup PF pairs
+      script:
+        cmd: setup_pf_pairs.sh
+
+    - name: Record pf pairs
+      set_fact:
+        pf_pairs_established: true
+        cacheable: yes
+  when: pf_pairs_established is undefined or not pf_pairs_established

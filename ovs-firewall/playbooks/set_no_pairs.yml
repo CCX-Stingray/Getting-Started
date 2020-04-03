@@ -1,0 +1,9 @@
+---
+
+- hosts: smartnic
+  remote_user: root
+  tasks:
+    - name: Set pairs as not established
+      set_fact:
+        pf_pairs_established: false
+        cacheable: yes

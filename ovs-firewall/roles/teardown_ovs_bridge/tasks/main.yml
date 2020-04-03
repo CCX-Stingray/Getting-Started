@@ -1,0 +1,14 @@
+---
+
+- name: Teardown OVS bridge
+  block:
+    - name: Teardown OVS bridge with DPDK datapath
+      openvswitch_bridge:
+        bridge: ovs-br0
+        state: absent
+
+    - name: Record OVS bridge torn down
+      set_fact:
+        ovs_bridge_active: false
+        cacheable: yes
+  when: ovs_bridge_active is defined and ovs_bridge_active

@@ -1,0 +1,7 @@
+# Edit these variables to match the setup
+smartnic ansible_host=10.0.0.12 bridge_ip=10.0.0.10
+
+# specify additional hosts if configuring multiple hosts at a time
+# smartnic_2 ansible_host=  bridge_ip=
+# smartnic_3 ansible_host=  bridge_ip=
+# ...

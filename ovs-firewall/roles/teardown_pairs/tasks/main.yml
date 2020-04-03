@@ -1,0 +1,13 @@
+---
+
+- name: Unconfig PF connections
+  block:
+    - name: Teardown PF pairs
+      script:
+        cmd: teardown_pf_pairs.sh
+
+    - name: Record pf pairs torn down
+      set_fact:
+        pf_pairs_established: false
+        cacheable: yes
+  when: pf_pairs_established is defined and pf_pairs_established

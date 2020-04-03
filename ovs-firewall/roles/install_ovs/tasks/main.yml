@@ -1,0 +1,29 @@
+---
+
+- name: Install OVS
+  block:
+    - name: Copy DPDK RPM
+      copy:
+        src: DPDK-18.11.6-1.aarch64.rpm
+        dest: /root/rpms
+
+    - name: Copy OVS RPM
+      copy:
+        src: openvswitch-2.12.0-1.el7.centos.aarch64.rpm
+        dest: /root/rpms
+
+    - name: Install DPDK RPM
+      yum:
+        name: /root/rpms/DPDK-18.11.6-1.aarch64.rpm
+        state: present
+
+    - name: Install OVS RPM
+      yum:
+        name: /root/rpms/openvswitch-2.12.0-1.el7.centos.aarch64.rpm
+        state: present
+
+    - name: Record OVS installed
+      set_fact:
+        ovs_installed: true
+        cacheable: yes
+  when: ovs_installed is undefined or not ovs_installed

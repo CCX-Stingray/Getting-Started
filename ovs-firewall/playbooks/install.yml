@@ -1,0 +1,7 @@
+---
+
+- hosts: smartnic
+  remote_user: root
+  roles:
+    - ../roles/install_bnxt_ctl
+    - ../roles/install_ovs
