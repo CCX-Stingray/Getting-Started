@@ -1,0 +1,9 @@
+#cloud-config
+users:
+  - name: ubuntu
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMcOCQHW226AcKQtTPjhDN/RRijR9mtsuYJtF433lyUkjQNr3NjxvXbjcu86ZjiSG/Og/PjMEGqPEpqydLJ81xTlcHmQqO+uRV2enKapWjOD8Fy3qujVUhHnvn9R8bCQxbaR/JznqWSdKIqvwZraj0G7dqwTEYAGmUrOLZh/M5aSz7J+X5r3LKTh3axgRTI2kOWFN42nIjTwQPzFlH5L0Rgl3K16x0tk/Yw/NXNntX8t6G0I4xShslRDX/qpP9flUx1Z8FPTVa3SsWTLAxBxcOQw4mumgzHBVpxgJyTiaGB2neqnzIDQUjYwiRjREmrHcnnMnqQMJvZovKl0Tto9PB root@localhost.localdomain
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6p/DEsMkx0Z7km/CHlVvRwUN0DLnxdTAvtqfMvMU0pY/DCk+ZvLqeJ1FDREm8Ukp3bsBrkZLjeM//CjPTp9fpmL37ia+2Snh8qU3UdnBuIKcabwjTYzBFLmQYSpyktZF22BM3lWHh5vbjlN/45YAqvHh/ZKrueMBT6N6h3x1Zpjxrffk0+XRFcy6RetzQrgy1kL3q+RGISq//8zgYE6p/MmMS+bq47PWhtaCnLzNyKz548+MbHC4IwW7g2LtXUg9WKgOAja/S0dr40ZfaHcG7JNwtv1FoHjswea4/ARyjmia1v4zsgQdwYG8b9efmxbS6LQnddcBRF3oZaGnx303x velocloud@stingray-console
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    groups: sudo
+    shell: /bin/bash

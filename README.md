@@ -5,4 +5,5 @@ The goal of this repo will to provide an intruction to using Broadcom's
 Stingray SmartNIC by demonstrating what is possible.
 
 [Using Stingray for OVS Offload](ovs-offload)  
-[Using Stingray as an OVS-based firewall](ovs-firewall)
+[Using Stingray as an OVS-based firewall](ovs-firewall)  
+[Using Stingray to run a VNF (Virtual Network Function)](vnf)  
