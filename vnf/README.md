@@ -15,8 +15,12 @@ In this sample implementation, we will show you how to instantiate a virtual mac
 
 **Figure 2**  
 
-### Installation and Usage
-Clone this repository on the SmartNIC, then `cd Getting-Started/vnf`
+### Prerequisites
+1. The SmartNIC should be running CentOS 7. Instructions on installing CentOS can be found in the [Stingray PS225 Quickstart Guide](https://github.com/CCX-Stingray/Documentation/blob/master/5880X-PS225-UG1xx.pdf), section 5.2. 
+2. Install the following packages on the SmartNIC using
+```
+yum install qemu-kvm-ma genisoimage
+``` 
 
 #### Kernel and DTB
 Instantiating a VM requires specific support in the kernel and DTB which may not be present in the versions shipped with the SmartNIC. 
@@ -33,19 +37,24 @@ CONFIG_BNXT_FLOWER_OFFLOAD=y
 
 Use `arch/arm64/boot/dts/broadcom/stingray/custom/bcm958804a8046i/bcm958804a8046i-pcie-iommu.dtb` as the DTB.
 
+In our tests, we used kernel version 4.14.119.
+
 #### VM Image
 We use an image from the Ubuntu [cloud image repository](https://cloud-images.ubuntu.com/bionic/). 
+
+### Installation and Usage
+Clone this repository on the SmartNIC, then `cd Getting-Started/vnf`
 
 #### cloud-init
 The Ubuntu virtual machine images have [cloud-init](https://cloudinit.readthedocs.io/en/latest/#) installed. We use it to add SSH public keys to the image which allows us to access the VM once it is running. They are passed as part of the cloud-init metadata in the form of an ISO image on a virtual CD-ROM drive that the VM can read. 
 
-Edit the `user-data` file to replace the SSH key with your SSH public key on the SmartNIC (since you will be ssh'ing to the VM from the SmartNIC). 
+* Edit the `user-data` file to replace the SSH key with your SSH public key on the SmartNIC (since you will be ssh'ing to the VM from the SmartNIC). 
 ```
     ssh-authorized-keys:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQRR..........nqQMJvZovKl0Tto9PB root@localhost.localdomain
 ```
 
-Then run `mk-ci-iso.sh`
+* Then run `mk-ci-iso.sh`
 
 #### Creating the VFs.
 To create the VFs and prepare them to be attached to the VM, run `create_vfs.sh`.
@@ -62,7 +71,7 @@ If you are using a different image, edit this line in the script before running 
 
 After the VM is running you can access it using `ssh -p 2222 ubuntu@localhost`
 
-#### Benchmarking
+### Benchmarking
 As we explained earlier, we use DPDK/testpmd to forward packets between the VFs to simulate a VNF application. 
 
 Packets are sent from a machine running DPDK/testpmd in transmit mode, that is connected to physical port 0 of the SmartNIC. These packets reach VF0, where the DPDK/testpmd application running in the VM forwards the packets to VF1 and changes the destination MAC address to that of PF10 on the Host. On the Host we again run DPDK/testpmd, this time in receive mode, bound to PF10. We measure the received packet rate at this point.
